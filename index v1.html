@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ArteSanto 2026 — Onde o folclore vira arte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F4ECDA;
+  --paper-2:#EFE4CC;
+  --ink:#1F1A14;
+  --ink-soft:#5B5142;
+  --line:#D9CBAE;
+  --blue:#1F3C88;        /* cobalt — boi pintadinho */
+  --blue-deep:#16306E;
+  --red:#D24B36;         /* coral/vermelho */
+  --yellow:#E9A21F;      /* marigold */
+  --green:#3E8E54;       /* leaf */
+  --pink:#E27B97;
+  --sky:#5DA9D6;
+  --display:'Bricolage Grotesque', system-ui, sans-serif;
+  --body:'Public Sans', system-ui, sans-serif;
+  --maxw:1240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+.eyebrow{
+  font-family:var(--display);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:13px;
+}
+h1,h2,h3{font-family:var(--display);line-height:1.02;letter-spacing:-.02em;font-weight:800}
+.section-label{display:inline-flex;align-items:center;gap:10px;margin-bottom:22px}
+.section-label .dot{width:9px;height:9px;border-radius:50%;background:var(--red)}
+
+/* ---------- top utility + header ---------- */
+.topbar{
+  background:var(--blue-deep);color:#F4ECDA;
+  font-family:var(--display);font-weight:600;
+  font-size:12.5px;letter-spacing:.04em;
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:38px;gap:18px}
+.topbar .marquee-item{display:flex;align-items:center;gap:9px;white-space:nowrap}
+.topbar .marquee-item b{color:var(--yellow);font-weight:700}
+.topbar .sep{opacity:.4}
+
+header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(244,236,218,.86);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  transition:box-shadow .3s, background .3s;
+}
+header.scrolled{box-shadow:0 8px 30px -18px rgba(31,26,20,.5)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:78px;gap:24px}
+.brand{display:flex;flex-direction:column;line-height:1}
+.brand .name{font-family:var(--display);font-weight:800;font-size:27px;letter-spacing:-.03em}
+.brand .name span{color:var(--red)}
+.brand .tag{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-top:5px}
+.menu{display:flex;align-items:center;gap:30px;font-family:var(--display);font-weight:600;font-size:15px}
+.menu a{position:relative;padding:6px 0;color:var(--ink)}
+.menu a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--red);transition:width .25s}
+.menu a:hover::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:16px}
+.badge-free{
+  font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--yellow);color:var(--blue-deep);white-space:nowrap;
+  padding:10px 18px;border-radius:999px;border:2px solid var(--ink);
+  box-shadow:3px 3px 0 var(--ink);
+}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:26px;height:2.5px;background:var(--ink);border-radius:2px;transition:.3s}
+
+/* mobile menu */
+.mobile-menu{
+  position:fixed;inset:0;z-index:55;background:var(--blue-deep);color:var(--paper);
+  display:flex;flex-direction:column;justify-content:center;gap:8px;padding:40px;
+  transform:translateY(-100%);transition:transform .4s cubic-bezier(.7,0,.2,1);
+}
+.mobile-menu.open{transform:translateY(0)}
+.mobile-menu a{font-family:var(--display);font-weight:700;font-size:32px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.mobile-menu a span{color:var(--yellow);font-size:18px;margin-right:14px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden;background:#0c0c10}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+.hero .scrim{position:absolute;inset:0;background:
+  linear-gradient(180deg, rgba(12,12,16,.35) 0%, rgba(12,12,16,.05) 35%, rgba(12,12,16,.78) 100%);}
+.hero .wrap{position:relative;z-index:3;padding-top:90px;padding-bottom:64px;width:100%}
+.hero .kicker{
+  display:inline-flex;align-items:center;gap:12px;color:var(--paper);
+  font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.22em;font-size:13px;
+  margin-bottom:22px;
+}
+.hero .kicker .chip{background:var(--red);padding:5px 12px;border-radius:999px;letter-spacing:.12em}
+.hero h1{color:#fff;font-size:clamp(56px,9.5vw,150px);letter-spacing:-.04em;text-shadow:0 12px 40px rgba(0,0,0,.45)}
+.hero h1 em{font-style:normal;color:var(--yellow)}
+.hero .lede{color:#F1E7D4;max-width:560px;font-size:19px;margin-top:18px;font-weight:400}
+.hero-facts{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.fact{
+  display:flex;flex-direction:column;gap:2px;background:rgba(244,236,218,.12);
+  border:1px solid rgba(244,236,218,.28);backdrop-filter:blur(6px);
+  padding:14px 20px;border-radius:14px;color:#fff;
+}
+.fact .k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#E7D8B8;font-weight:700;font-family:var(--display)}
+.fact .v{font-family:var(--display);font-weight:700;font-size:21px}
+.flags{position:absolute;top:0;left:0;width:100%;height:7px;z-index:4;
+  background:repeating-linear-gradient(90deg,var(--red) 0 40px,var(--yellow) 40px 80px,var(--green) 80px 120px,var(--blue) 120px 160px,var(--pink) 160px 200px)}
+
+/* ---------- generic section ---------- */
+section{position:relative}
+.band{padding:110px 0}
+.band.paper2{background:var(--paper-2)}
+.band.ink{background:var(--blue-deep);color:var(--paper)}
+
+/* O evento */
+.evento-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.evento-grid h2{font-size:clamp(38px,4.6vw,62px)}
+.evento-grid .big{font-size:clamp(22px,2.3vw,30px);line-height:1.32;font-weight:500;margin:8px 0 26px;font-family:var(--display);letter-spacing:-.02em}
+.evento-grid p{color:var(--ink-soft);font-size:17px;max-width:52ch}
+.evento-media{position:relative}
+.evento-media img{width:100%;border-radius:18px;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line)}
+.evento-media .tagpill{
+  position:absolute;left:-18px;bottom:28px;background:var(--red);color:#fff;
+  font-family:var(--display);font-weight:700;padding:14px 22px;border-radius:14px;
+  box-shadow:6px 6px 0 var(--ink);font-size:17px;
+}
+.edition-num{position:absolute;right:-10px;top:-26px;font-family:var(--display);font-weight:800;
+  font-size:120px;color:var(--yellow);line-height:.8;opacity:.95;-webkit-text-stroke:3px var(--ink)}
+
+/* pilares */
+.pilares-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:48px;flex-wrap:wrap}
+.pilares-head h2{font-size:clamp(34px,4.2vw,56px);max-width:16ch}
+.pilares{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.pilar{
+  background:var(--paper);border:1.5px solid var(--ink);border-radius:18px;padding:26px 24px 30px;
+  box-shadow:5px 5px 0 var(--ink);display:flex;flex-direction:column;gap:14px;min-height:280px;
+  transition:transform .25s, box-shadow .25s;
+}
+.pilar:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--ink)}
+.pilar .icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;color:#fff;font-family:var(--display);font-weight:800;font-size:22px}
+.pilar h3{font-size:23px;letter-spacing:-.01em}
+.pilar p{color:var(--ink-soft);font-size:15px;margin-top:auto}
+.pilar.c1 .icon{background:var(--red)}
+.pilar.c2 .icon{background:var(--blue)}
+.pilar.c3 .icon{background:var(--green)}
+.pilar.c4 .icon{background:var(--yellow);color:var(--blue-deep)}
+
+/* homenagem */
+.homenagem{background:var(--blue-deep);color:var(--paper);overflow:hidden;position:relative}
+.homenagem::before{content:"";position:absolute;inset:0;opacity:.07;
+  background:radial-gradient(circle at 20% 30%, var(--yellow) 0 2px, transparent 3px) 0 0/46px 46px}
+.hom-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;z-index:2}
+.hom-text .eyebrow{color:var(--yellow)}
+.hom-text h2{font-size:clamp(40px,5.4vw,76px);margin:18px 0 24px;color:#fff}
+.hom-text h2 em{font-style:normal;color:var(--yellow)}
+.hom-text p{color:#DFD2B6;font-size:17px;max-width:50ch;margin-bottom:16px}
+.hom-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.hom-tags span{border:1px solid rgba(244,236,218,.35);color:var(--paper);font-family:var(--display);font-weight:600;
+  font-size:13.5px;padding:8px 15px;border-radius:999px}
+.hom-media{position:relative;display:grid;place-items:center;min-height:520px}
+.hom-media .halo{position:absolute;width:115%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,var(--red) 0%, rgba(210,75,54,0) 62%);opacity:.55}
+.hom-media img{position:relative;width:86%;filter:drop-shadow(0 30px 50px rgba(0,0,0,.5));animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+/* expositores */
+.expo-head{max-width:60ch;margin-bottom:46px}
+.expo-head h2{font-size:clamp(34px,4.2vw,56px);margin-bottom:18px}
+.expo-head p{color:var(--ink-soft);font-size:18px}
+.expo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.expo-card{
+  position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);
+  background:var(--paper-2);padding:30px;display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:360px;transition:transform .3s;
+}
+.expo-card:hover{transform:translateY(-6px)}
+.expo-card img{position:absolute;width:78%;left:50%;top:46%;transform:translate(-50%,-50%);transition:transform .4s}
+.expo-card:hover img{transform:translate(-50%,-50%) scale(1.05) rotate(-2deg)}
+.expo-card .cap{position:relative;z-index:2}
+.expo-card .cap span{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.expo-card .cap h3{font-size:22px;margin-top:4px}
+.expo-soon{
+  margin-top:40px;display:flex;align-items:center;gap:18px;justify-content:center;
+  background:var(--yellow);border:1.5px solid var(--ink);border-radius:16px;padding:22px;
+  font-family:var(--display);font-weight:700;font-size:19px;color:var(--blue-deep);box-shadow:5px 5px 0 var(--ink);text-align:center
+}
+
+/* programação */
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+.prog-grid h2{font-size:clamp(36px,4.6vw,64px);margin-bottom:22px}
+.prog-grid p{color:var(--ink-soft);font-size:17px;max-width:48ch}
+.prog-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.prog-list .row{display:flex;align-items:center;gap:20px;padding:18px 4px;border-bottom:1px solid var(--line)}
+.prog-list .row .ic{width:40px;height:40px;border-radius:10px;flex:none;display:grid;place-items:center;background:var(--paper-2);font-size:18px}
+.prog-list .row b{font-family:var(--display);font-size:17px}
+.prog-soon{margin-top:26px;display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;
+  color:var(--red);font-size:15px;letter-spacing:.02em}
+.prog-soon .pulse{width:9px;height:9px;border-radius:50%;background:var(--red);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(210,75,54,.5)}70%{box-shadow:0 0 0 10px rgba(210,75,54,0)}100%{box-shadow:0 0 0 0 rgba(210,75,54,0)}}
+
+/* notícias */
+.news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:10px}
+.news-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.news-card:hover{transform:translateY(-5px);box-shadow:0 22px 40px -26px rgba(31,26,20,.6)}
+.news-card .ph{aspect-ratio:16/10;background:linear-gradient(135deg,var(--paper-2),#e6d6b6);position:relative;overflow:hidden}
+.news-card .ph::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(31,26,20,.04) 0 14px,transparent 14px 28px)}
+.news-card .ph .ig{position:absolute;top:16px;left:16px;background:#fff;border-radius:10px;padding:7px 12px;display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:13px;box-shadow:0 6px 16px -8px rgba(0,0,0,.4)}
+.news-card .ph .ig .glyph{width:18px;height:18px;border-radius:5px;background:linear-gradient(45deg,#feda75,#d62976,#4f5bd5)}
+.news-card .body{padding:24px}
+.news-card .body h3{font-size:21px;margin-bottom:10px}
+.news-card .body p{color:var(--ink-soft);font-size:15px}
+.news-card .body .via{margin-top:16px;font-family:var(--display);font-weight:700;font-size:13px;color:var(--blue);display:flex;align-items:center;gap:7px}
+
+/* como chegar */
+.chegar-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:46px;align-items:stretch}
+.chegar-info h2{font-size:clamp(36px,4.6vw,62px);margin-bottom:24px}
+.chegar-info .addr{display:flex;flex-direction:column;gap:18px;margin-top:8px}
+.chegar-info .addr .item{display:flex;gap:16px;align-items:flex-start}
+.chegar-info .addr .item .ic{width:44px;height:44px;border-radius:12px;flex:none;display:grid;place-items:center;background:var(--red);color:#fff;font-size:20px}
+.chegar-info .addr .item .k{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.chegar-info .addr .item .v{font-family:var(--display);font-weight:700;font-size:19px}
+.map-card{border-radius:20px;overflow:hidden;border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);min-height:380px;position:relative}
+.map-card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.map-card .pin{position:absolute;left:50%;top:46%;transform:translate(-50%,-100%);z-index:3;display:flex;flex-direction:column;align-items:center}
+.map-card .pin .label{background:var(--blue-deep);color:#fff;font-family:var(--display);font-weight:700;font-size:13px;padding:6px 12px;border-radius:8px;white-space:nowrap;box-shadow:0 6px 16px -6px rgba(0,0,0,.5)}
+.map-card .pin .needle{width:0;height:0;border:7px solid transparent;border-top-color:var(--blue-deep);margin-top:-1px}
+
+/* footer */
+footer{background:#16120C;color:#E9DEC6;padding:80px 0 36px}
+.foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:54px;border-bottom:1px solid rgba(233,222,198,.16)}
+.foot-brand .name{font-family:var(--display);font-weight:800;font-size:38px;letter-spacing:-.03em}
+.foot-brand .name span{color:var(--yellow)}
+.foot-brand p{color:#B6A988;margin-top:14px;max-width:34ch}
+.foot-col h4{font-family:var(--display);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9C8E6C;margin-bottom:16px}
+.foot-col a{display:block;padding:7px 0;color:#E9DEC6;font-family:var(--display);font-weight:600;font-size:16px;transition:color .2s}
+.foot-col a:hover{color:var(--yellow)}
+.foot-social a{display:flex;align-items:center;gap:10px}
+.foot-social a .g{width:22px;height:22px;border-radius:6px;background:linear-gradient(45deg,#feda75,#d62976,#4f5bd5);flex:none}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:28px;flex-wrap:wrap;color:#8C7F60;font-size:13px;font-family:var(--display);font-weight:500}
+.foot-bottom .dates{display:flex;gap:18px;align-items:center;color:#E9DEC6}
+.foot-bottom .dates b{color:var(--yellow)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+@media (max-width:1000px){
+  .evento-grid,.hom-grid,.prog-grid,.chegar-grid{grid-template-columns:1fr;gap:40px}
+  .pilares{grid-template-columns:repeat(2,1fr)}
+  .expo-grid{grid-template-columns:1fr 1fr}
+  .news-grid{grid-template-columns:1fr}
+  .hom-media{min-height:380px}
+  .edition-num{font-size:90px}
+}
+@media (max-width:760px){
+  .wrap{padding:0 20px}
+  .menu,.nav-cta .badge-free{display:none}
+  .burger{display:flex}
+  .topbar .marquee-item.hide-sm{display:none}
+  .band{padding:72px 0}
+  .pilares,.expo-grid{grid-template-columns:1fr}
+  .hero{min-height:82vh}
+  .foot-top{grid-template-columns:1fr;gap:32px}
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hom-media img{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- top utility bar -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="marquee-item"><b>14ª edição</b><span>·</span> Feira de Artesanato &amp; Economia Criativa do Espírito Santo</div>
+    <div class="marquee-item hide-sm"><span>📍</span> Praça do Papa, Vitória <span class="sep">|</span> 08 a 13 de setembro de 2026</div>
+  </div>
+</div>
+
+<!-- header -->
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="name">Arte<span>Santo</span></span>
+      <span class="tag">Onde o folclore vira arte</span>
+    </a>
+    <nav class="menu">
+      <a href="#homenagem">Homenagem 2026</a>
+      <a href="#programacao">Programação</a>
+      <a href="#expositores">Expositores</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#chegar">Como Chegar</a>
+    </nav>
+    <div class="nav-cta">
+      <span class="badge-free">Entrada Gratuita</span>
+      <button class="burger" id="burger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#homenagem"><span>01</span>Homenagem 2026</a>
+  <a href="#programacao"><span>02</span>Programação</a>
+  <a href="#expositores"><span>03</span>Expositores</a>
+  <a href="#noticias"><span>04</span>Notícias</a>
+  <a href="#chegar"><span>05</span>Como Chegar</a>
+</div>
+
+<!-- hero -->
+<section class="hero">
+  <div class="flags"></div>
+  <img class="bg" src="img/hero-bull.jpg" alt="Boi ornamentado em festa do folclore capixaba" />
+  <div class="scrim"></div>
+  <div class="wrap">
+    <div class="kicker"><span class="chip">Edição 2026</span> Festival de Artesanato &amp; Cultura Popular</div>
+    <h1>Arte<em>Santo</em></h1>
+    <p class="lede">Durante seis dias, a Praça do Papa se transforma em um grande encontro entre tradição e inovação — valorizando quem cria com as mãos, com memória, com técnica e com identidade.</p>
+    <div class="hero-facts">
+      <div class="fact"><span class="k">Quando</span><span class="v">08 a 13 de setembro</span></div>
+      <div class="fact"><span class="k">Onde</span><span class="v">Praça do Papa · Vitória</span></div>
+      <div class="fact"><span class="k">Ingresso</span><span class="v">Entrada gratuita</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- o evento -->
+<section class="band" id="evento">
+  <div class="wrap evento-grid">
+    <div class="evento-text reveal">
+      <div class="section-label"><span class="dot"></span><span class="eyebrow">O Evento</span></div>
+      <h2>Um dos principais eventos de artesanato do Espírito Santo</h2>
+      <p class="big">A ArteSanto chega à sua 14ª edição reunindo artesãos, criadores, artistas, expositores, sabores e expressões culturais.</p>
+      <p>A Praça do Papa se transforma em um grande espaço de encontro entre tradição e inovação, valorizando quem cria com as mãos, com memória, com técnica e com identidade. Um território vivo de economia criativa, cultura popular e experiências para todo o público.</p>
+    </div>
+    <div class="evento-media reveal d1">
+      <span class="edition-num">14ª</span>
+      <img src="img/feira.jpg" alt="Movimento de visitantes na feira ArteSanto" />
+      <span class="tagpill">Seis dias de feira</span>
+    </div>
+  </div>
+</section>
+
+<!-- pilares -->
+<section class="band paper2">
+  <div class="wrap">
+    <div class="pilares-head">
+      <div class="reveal">
+        <div class="section-label"><span class="dot"></span><span class="eyebrow">Quatro territórios</span></div>
+        <h2>Tradição e inovação reunidas em um só lugar</h2>
+      </div>
+    </div>
+    <div class="pilares">
+      <div class="pilar c1 reveal d1">
+        <div class="icon">✦</div>
+        <h3>Artesanato</h3>
+        <p>Peças autorais, técnicas tradicionais e criações contemporâneas feitas à mão.</p>
+      </div>
+      <div class="pilar c2 reveal d2">
+        <div class="icon">◈</div>
+        <h3>Cultura popular</h3>
+        <p>Manifestações, símbolos e saberes que fazem parte da identidade capixaba.</p>
+      </div>
+      <div class="pilar c3 reveal d3">
+        <div class="icon">❋</div>
+        <h3>Economia criativa</h3>
+        <p>Geração de renda, empreendedorismo e valorização dos pequenos negócios.</p>
+      </div>
+      <div class="pilar c4 reveal d4">
+        <div class="icon">◆</div>
+        <h3>Experiência</h3>
+        <p>Compras, gastronomia, shows, atrações culturais e programação gratuita.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- homenagem -->
+<section class="band homenagem" id="homenagem">
+  <div class="wrap hom-grid">
+    <div class="hom-text reveal">
+      <span class="eyebrow">Homenagem 2026</span>
+      <h2>Um boi, muitas mãos. Todo o Espírito Santo em <em>movimento.</em></h2>
+      <p>Em 2026, o homenageado é o <strong>Boi Pintadinho</strong>. Colorido, brincante e cheio de movimento, este ícone é uma das expressões mais marcantes da cultura popular capixaba — e inspira toda a experiência da ArteSanto.</p>
+      <p>Na feira, o boi ganha novas formas pelas mãos dos artesãos: bordado, trançado, moldado, esculpido, ornamentado e reinventado por diferentes técnicas que representam a diversidade cultural das regiões turísticas do estado.</p>
+      <div class="hom-tags">
+        <span>Bordado</span><span>Trançado</span><span>Moldado</span><span>Esculpido</span><span>Ornamentado</span><span>Reinventado</span>
+      </div>
+    </div>
+    <div class="hom-media reveal d2">
+      <div class="halo"></div>
+      <img src="img/boi-1.png" alt="Escultura de Boi Pintadinho ornamentada com flores" />
+    </div>
+  </div>
+</section>
+
+<!-- expositores -->
+<section class="band" id="expositores">
+  <div class="wrap">
+    <div class="expo-head reveal">
+      <div class="section-label"><span class="dot"></span><span class="eyebrow">Expositores</span></div>
+      <h2>Artesãos que transformam matéria-prima em peças únicas</h2>
+      <p>A ArteSanto reúne artesãos e expositores que transformam matérias-primas, técnicas e histórias em peças autorais. Em breve, você poderá conhecer os participantes da edição 2026.</p>
+    </div>
+    <div class="expo-grid">
+      <div class="expo-card reveal d1">
+        <img src="img/boi-2.png" alt="Escultura de boi ornamentado" />
+        <div class="cap"><span>Cerâmica &amp; escultura</span><h3>Bois ornamentados</h3></div>
+      </div>
+      <div class="expo-card reveal d2">
+        <img src="img/baskets.png" alt="Cestaria artesanal" />
+        <div class="cap"><span>Fibras &amp; trançados</span><h3>Cestaria capixaba</h3></div>
+      </div>
+      <div class="expo-card reveal d3">
+        <img src="img/pottery.png" alt="Cerâmica pintada à mão" />
+        <div class="cap"><span>Barro &amp; pintura</span><h3>Cerâmica decorativa</h3></div>
+      </div>
+    </div>
+    <div class="expo-soon reveal">Conheça os participantes da edição 2026 — lista de expositores em breve.</div>
+  </div>
+</section>
+
+<!-- programação -->
+<section class="band paper2" id="programacao">
+  <div class="wrap prog-grid">
+    <div class="prog-text reveal">
+      <div class="section-label"><span class="dot"></span><span class="eyebrow">Programação</span></div>
+      <h2>Seis dias de cultura, arte e experiências</h2>
+      <p>Durante os seis dias de evento, o público poderá acompanhar atrações culturais, apresentações artísticas, shows, oficinas, experiências criativas e atividades ligadas ao artesanato e à cultura popular.</p>
+      <div class="prog-soon"><span class="pulse"></span> A programação completa da ArteSanto 2026 será divulgada em breve.</div>
+    </div>
+    <div class="prog-list reveal d1">
+      <div class="row"><div class="ic">🎭</div><b>Apresentações artísticas &amp; folclóricas</b></div>
+      <div class="row"><div class="ic">🎶</div><b>Shows e atrações musicais</b></div>
+      <div class="row"><div class="ic">🧵</div><b>Oficinas e experiências criativas</b></div>
+      <div class="row"><div class="ic">🍲</div><b>Gastronomia e sabores capixabas</b></div>
+      <div class="row"><div class="ic">🛍️</div><b>Feira de artesanato e compras</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- notícias -->
+<section class="band" id="noticias">
+  <div class="wrap">
+    <div class="expo-head reveal">
+      <div class="section-label"><span class="dot"></span><span class="eyebrow">Notícias</span></div>
+      <h2>Acompanhe as novidades da ArteSanto</h2>
+    </div>
+    <div class="news-grid">
+      <article class="news-card reveal d1">
+        <div class="ph"><div class="ig"><span class="glyph"></span> @artesanto.es</div></div>
+        <div class="body">
+          <h3>Manchete da notícia / publicação</h3>
+          <p>Legenda padrão de rede social com os destaques e novidades da feira.</p>
+          <div class="via">↗ Via Instagram</div>
+        </div>
+      </article>
+      <article class="news-card reveal d2">
+        <div class="ph"><div class="ig"><span class="glyph"></span> @artesanto.es</div></div>
+        <div class="body">
+          <h3>Manchete da notícia / publicação</h3>
+          <p>Legenda padrão de rede social com os destaques e novidades da feira.</p>
+          <div class="via">↗ Via Instagram</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- como chegar -->
+<section class="band paper2" id="chegar">
+  <div class="wrap chegar-grid">
+    <div class="chegar-info reveal">
+      <div class="section-label"><span class="dot"></span><span class="eyebrow">Como Chegar</span></div>
+      <h2>Praça do Papa, Vitória</h2>
+      <div class="addr">
+        <div class="item"><div class="ic">📍</div><div><div class="k">Local</div><div class="v">Praça do Papa — Enseada do Suá, Vitória/ES</div></div></div>
+        <div class="item"><div class="ic">📅</div><div><div class="k">Data</div><div class="v">08 a 13 de setembro de 2026</div></div></div>
+        <div class="item"><div class="ic">🎟️</div><div><div class="k">Ingresso</div><div class="v">Entrada gratuita</div></div></div>
+      </div>
+    </div>
+    <div class="map-card reveal d1">
+      <img src="img/map.jpg" alt="Mapa da Praça do Papa, Vitória" />
+      <div class="pin"><div class="label">Praça do Papa</div><div class="needle"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="name">Arte<span>Santo</span></div>
+        <p>Onde o folclore vira arte. A maior feira de artesanato e economia criativa do Espírito Santo.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navegação</h4>
+        <a href="#homenagem">Homenagem 2026</a>
+        <a href="#programacao">Programação</a>
+        <a href="#expositores">Expositores</a>
+        <a href="#noticias">Notícias</a>
+        <a href="#chegar">Como Chegar</a>
+      </div>
+      <div class="foot-col foot-social">
+        <h4>Redes sociais</h4>
+        <a href="#"><span class="g"></span> @artesanto.es</a>
+        <a href="#"><span class="g"></span> artesantoes</a>
+        <a href="#"><span class="g"></span> artesanto.com.br</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ArteSanto · Todos os direitos reservados.</span>
+      <div class="dates"><b>08 a 13 de setembro</b> · Praça do Papa</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// header shadow on scroll
+const header=document.getElementById('top');
+addEventListener('scroll',()=>{header.classList.toggle('scrolled',scrollY>20)});
+// mobile menu
+const burger=document.getElementById('burger');
+const mm=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>mm.classList.toggle('open'));
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+// reveal on scroll
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
