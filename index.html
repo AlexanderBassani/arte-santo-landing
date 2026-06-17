@@ -268,12 +268,12 @@
       position: relative
     }
 
-    .ei-strip {
+    /* .ei-strip {
       height: 20px;
       width: 100%;
       background: url('img/intro-strip.png') center/cover;
       box-shadow: inset 0 -1px 0 rgba(58, 16, 32, .10)
-    }
+    } */
 
     .ei-grid {
       display: grid;
@@ -1251,7 +1251,7 @@
 
     @media (max-width:720px) {
       .wrap {
-        padding: 0 20px
+        padding: 30px 20px
       }
 
       .menu {
@@ -1267,7 +1267,7 @@
       }
 
       .band {
-        padding: 66px 0
+        padding: 0
       }
 
       .pilares,
@@ -1301,6 +1301,10 @@
       .hom-media img {
         animation: none
       }
+    }
+
+    .hide {
+      display: none;
     }
 
     /* fundos com cores sólidas (textura de papel removida) */
@@ -1350,7 +1354,7 @@
 
   <!-- ============ EVENTO INTRO (logo + paragrafo) ============ -->
   <section class="evento-intro">
-    <div class="ei-strip"></div>
+    <!-- <div class="ei-strip"></div> -->
     <div class="wrap ei-grid">
       <div class="ei-logo"><img src="img/logo-stack.png" alt="ArteSanto" /></div>
       <div class="ei-text">
@@ -1408,7 +1412,7 @@
           </div>
         </div>
         <div class="pilar c4 reveal d4">
-          <div class="pic"><img src="img/feira.jpg" alt="Experiência para o público" /></div>
+          <div class="pic"><img src="img/experiencia.png" alt="Experiência para o público" /></div>
           <div class="stripe"></div>
           <div class="b">
             <h3>Experiência</h3>
@@ -1450,7 +1454,7 @@
   </svg>
 
   <!-- ============ EXPOSITORES ============ -->
-  <section class="band cream" id="expositores">
+  <section class="band cream hide" id="expositores">
     <div class="wrap">
       <div class="expo-head reveal">
         <div class="section-eyebrow"><span class="pin"></span>Expositores</div>
@@ -1586,9 +1590,7 @@
       <div class="map-card reveal d1">
         <iframe
           src="https://www.google.com/maps?q=Pra%C3%A7a%20do%20Papa,%20Enseada%20do%20Su%C3%A1,%20Vit%C3%B3ria%20-%20ES&output=embed"
-          title="Mapa da Praça do Papa, Vitória/ES"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa da Praça do Papa, Vitória/ES" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           allowfullscreen></iframe>
       </div>
     </div>
