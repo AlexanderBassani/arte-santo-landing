@@ -40,14 +40,42 @@
     </nav>
   </header>
 
-  <!-- ============ HERO (banner oficial) ============ -->
+  <!-- ============ HERO (carrossel de banners oficiais) ============ -->
   <section class="hero-banner" id="evento">
-    <picture>
-      <source media="(max-width:600px)" srcset="img/banner-hero-mobile.png" />
-      <source media="(max-width:1024px)" srcset="img/banner-hero-tablet.png" />
-      <img src="img/banner-hero.png"
-        alt="ArteSanto — Onde o folclore vira arte · 08 a 13 de setembro · Praça do Papa · Entrada gratuita" />
-    </picture>
+    <div class="hero-carousel" id="heroCarousel">
+      <div class="hc-slide active">
+        <picture>
+          <source media="(max-width:600px)" srcset="img/banner-hero-mobile.png" />
+          <source media="(max-width:1024px)" srcset="img/banner-hero-tablet.png" />
+          <img src="img/banner-hero.png"
+            alt="ArteSanto — Onde o folclore vira arte · 08 a 13 de setembro · Praça do Papa · Entrada gratuita" />
+        </picture>
+      </div>
+      <div class="hc-slide">
+        <picture>
+          <source media="(max-width:600px)" srcset="img/aviso-edital-mobile.png" />
+          <source media="(max-width:1024px)" srcset="img/aviso-edital-tablet.png" />
+          <img src="img/aviso-edital-desktop.png"
+            alt="Artesão capixaba com SICAB — edital da ADERES para seleção de expositores da ArteSanto será publicado no dia 15/07" />
+        </picture>
+      </div>
+      <button class="hc-arrow prev" aria-label="Slide anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+      <button class="hc-arrow next" aria-label="Próximo slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+      <div class="hc-dots">
+        <button class="hc-dot active" aria-label="Ir para o slide 1"></button>
+        <button class="hc-dot" aria-label="Ir para o slide 2"></button>
+      </div>
+    </div>
   </section>
 
   <!-- ============ EVENTO INTRO (logo + paragrafo) ============ -->
@@ -343,6 +371,33 @@
     burger.addEventListener('click', () => mm.classList.add('open'));
     document.getElementById('closeMenu').addEventListener('click', () => mm.classList.remove('open'));
     mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mm.classList.remove('open')));
+    const hc = document.getElementById('heroCarousel');
+    const hcSlides = hc.querySelectorAll('.hc-slide');
+    const hcDots = hc.querySelectorAll('.hc-dot');
+    let hcCur = 0, hcTimer;
+    function hcGoTo(i) {
+      hcSlides[hcCur].classList.remove('active');
+      hcDots[hcCur].classList.remove('active');
+      hcCur = (i + hcSlides.length) % hcSlides.length;
+      hcSlides[hcCur].classList.add('active');
+      hcDots[hcCur].classList.add('active');
+    }
+    function hcRestart() { clearInterval(hcTimer); hcTimer = setInterval(() => hcGoTo(hcCur + 1), 6000); }
+    hc.querySelector('.hc-arrow.prev').addEventListener('click', () => { hcGoTo(hcCur - 1); hcRestart(); });
+    hc.querySelector('.hc-arrow.next').addEventListener('click', () => { hcGoTo(hcCur + 1); hcRestart(); });
+    hcDots.forEach((d, i) => d.addEventListener('click', () => { hcGoTo(i); hcRestart(); }));
+    hc.addEventListener('mouseenter', () => clearInterval(hcTimer));
+    hc.addEventListener('mouseleave', hcRestart);
+    let hcX0 = null;
+    hc.addEventListener('touchstart', e => { hcX0 = e.touches[0].clientX; clearInterval(hcTimer); }, { passive: true });
+    hc.addEventListener('touchend', e => {
+      if (hcX0 === null) return;
+      const dx = e.changedTouches[0].clientX - hcX0;
+      if (Math.abs(dx) > 40) hcGoTo(hcCur + (dx < 0 ? 1 : -1));
+      hcX0 = null;
+      hcRestart();
+    }, { passive: true });
+    hcRestart();
     const io = new IntersectionObserver((es) => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }) }, { threshold: .12 });
     function initReveals() { document.querySelectorAll('.reveal').forEach(el => { const r = el.getBoundingClientRect(); if (r.top > innerHeight * 0.9) { el.classList.add('armed'); io.observe(el) } }) }
     if (document.readyState !== 'loading') initReveals(); else addEventListener('DOMContentLoaded', initReveals);
