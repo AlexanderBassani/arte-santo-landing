@@ -280,6 +280,27 @@ header {
   object-fit: cover
 }
 
+/* slides cuja arte não tem a proporção do carrossel: imagem inteira (contain)
+   sobre um fundo com a mesma arte desfocada */
+.hc-slide.fit picture {
+  position: relative;
+  z-index: 1
+}
+
+.hc-slide.fit picture img {
+  object-fit: contain
+}
+
+.hc-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(28px) brightness(.92);
+  transform: scale(1.12)
+}
+
 .hc-arrow {
   position: absolute;
   top: 50%;
