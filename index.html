@@ -74,7 +74,9 @@
       </div>
       <div class="hc-slide fit">
         <img class="hc-bg" src="img/BANNER_SITE_INSCRIÇÃO-03.png" alt="" aria-hidden="true" />
-        <a href="pdf/Regulamento.pdf" target="_blank" rel="noopener">
+        <a id="ctaConcurso"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdNTlCeXdhHSK8CuHW6JYdd-_pby9SjrwaRjq7JwUo64HgGhQ/viewform"
+          target="_blank" rel="noopener">
           <picture>
             <source media="(max-width:600px)" srcset="img/BANNER_SITE_INSCRIÇÃO-01.png" />
             <source media="(max-width:1024px)" srcset="img/BANNER_SITE_INSCRIÇÃO-02.png" />
@@ -391,6 +393,20 @@
     <a href="#chegar">Como Chegar</a>
   </div>
 
+  <!-- modal do concurso (inscrição x regulamento) -->
+  <dialog class="concurso-modal" id="concursoModal" aria-labelledby="concursoModalTitle">
+    <button class="cm-close" id="concursoModalClose" aria-label="Fechar">×</button>
+    <h2 class="cm-title" id="concursoModalTitle">Concurso Estadual dos Bois Artesanais</h2>
+    <p class="cm-text">O Boi Pintadinho vai ganhar novas formas na ArteSanto. Faça sua inscrição ou leia o regulamento
+      completo antes de participar.</p>
+    <div class="cm-actions">
+      <a class="cm-btn primary"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSdNTlCeXdhHSK8CuHW6JYdd-_pby9SjrwaRjq7JwUo64HgGhQ/viewform"
+        target="_blank" rel="noopener">Fazer inscrição</a>
+      <a class="cm-btn" href="pdf/Regulamento.pdf" target="_blank" rel="noopener">Ler o regulamento</a>
+    </div>
+  </dialog>
+
   <script>
     const burger = document.getElementById('burger');
     const mm = document.getElementById('mobileMenu');
@@ -401,14 +417,19 @@
     const hcSlides = hc.querySelectorAll('.hc-slide');
     const hcDots = hc.querySelectorAll('.hc-dot');
     let hcCur = 0, hcTimer;
+    // slides ocultos ficam inert: não recebem foco por Tab nem aparecem para leitores de tela
+    hcSlides.forEach((s, i) => { s.inert = i !== 0; });
     function hcGoTo(i) {
       hcSlides[hcCur].classList.remove('active');
+      hcSlides[hcCur].inert = true;
       hcDots[hcCur].classList.remove('active');
       hcCur = (i + hcSlides.length) % hcSlides.length;
       hcSlides[hcCur].classList.add('active');
+      hcSlides[hcCur].inert = false;
       hcDots[hcCur].classList.add('active');
     }
-    function hcRestart() { clearInterval(hcTimer); hcTimer = setInterval(() => hcGoTo(hcCur + 1), 6000); }
+    let hcLocked = false;
+    function hcRestart() { clearInterval(hcTimer); if (hcLocked) return; hcTimer = setInterval(() => hcGoTo(hcCur + 1), 6000); }
     hc.querySelector('.hc-arrow.prev').addEventListener('click', () => { hcGoTo(hcCur - 1); hcRestart(); });
     hc.querySelector('.hc-arrow.next').addEventListener('click', () => { hcGoTo(hcCur + 1); hcRestart(); });
     hcDots.forEach((d, i) => d.addEventListener('click', () => { hcGoTo(i); hcRestart(); }));
@@ -424,6 +445,23 @@
       hcRestart();
     }, { passive: true });
     hcRestart();
+    const cModal = document.getElementById('concursoModal');
+    const cCta = document.getElementById('ctaConcurso');
+    cCta.addEventListener('click', e => {
+      if (typeof cModal.showModal !== 'function') return; // sem suporte a <dialog>, segue direto pra inscrição
+      e.preventDefault();
+      hcLocked = true;
+      clearInterval(hcTimer);
+      cModal.showModal();
+    });
+    document.getElementById('concursoModalClose').addEventListener('click', () => cModal.close());
+    cModal.addEventListener('click', e => {
+      if (e.target !== cModal) return; // clique veio de um filho, não do fundo
+      const r = cModal.getBoundingClientRect();
+      const dentro = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!dentro) cModal.close();
+    });
+    cModal.addEventListener('close', () => { hcLocked = false; hcRestart(); });
     const io = new IntersectionObserver((es) => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }) }, { threshold: .12 });
     function initReveals() { document.querySelectorAll('.reveal').forEach(el => { const r = el.getBoundingClientRect(); if (r.top > innerHeight * 0.9) { el.classList.add('armed'); io.observe(el) } }) }
     if (document.readyState !== 'loading') initReveals(); else addEventListener('DOMContentLoaded', initReveals);
