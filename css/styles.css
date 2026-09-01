@@ -168,7 +168,9 @@ header {
 .menu {
   display: flex;
   align-items: center;
-  gap: 34px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px 34px;
   font-family: var(--display);
   font-weight: 600;
   font-size: 16px;
@@ -211,6 +213,26 @@ header {
 
 .menu .free::after {
   display: none
+}
+
+.menu .manual {
+  background: var(--blue);
+  color: var(--cream);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  line-height: 1
+}
+
+.menu .manual::after {
+  display: none
+}
+
+.menu .manual:hover {
+  background: var(--magenta)
 }
 
 .burger {
@@ -1366,6 +1388,10 @@ footer {
   font-size: 30px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(248, 237, 224, .16)
+}
+
+.mobile-menu .manual {
+  color: var(--yellow)
 }
 
 .mobile-menu .close {
